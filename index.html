@@ -4,35 +4,890 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Showkraft | Where Dreams become Reality</title>
-    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
                     colors: {
                         amber: {
                             400: '#fbbf24',
                             500: '#f59e0b',
                             600: '#d97706',
+                        },
+                        obsidian: {
+                            950: '#06080c',
+                            900: '#0d1117',
+                            800: '#161b22',
                         }
-                    },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'Georgia', 'serif'],
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    
-    <!-- Lucide Icons & Google Fonts -->
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        h1, h2, h3, h4, .font-serif { font-family: 'Playfair Display', Georgia, serif; }
-        .glass-nav { background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(12px); }
-        .glass-card { background: rgba(15, 23, 42,
+        /* Custom scrollbar and modal overlay styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #06080c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #161b22;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-obsidian-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-obsidian-950">
+
+    <!-- ================= STICKY NAVIGATION BAR ================= -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-6 bg-gradient-to-b from-obsidian-950/90 via-obsidian-950/40 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#home" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 flex items-center justify-center text-obsidian-950 font-black font-serif text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                    S
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-bold tracking-wider text-white group-hover:text-amber-400 transition-colors uppercase font-serif">
+                        Show<span class="text-amber-400">kraft</span>
+                    </span>
+                    <span class="text-[9px] tracking-[0.25em] uppercase text-amber-500/80 font-medium -mt-1">
+                        Luxury Events & Decors
+                    </span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest font-semibold text-slate-300">
+                <a href="#home" class="hover:text-amber-400 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-400 hover:after:w-full after:transition-all">Home</a>
+                <a href="#services" class="hover:text-amber-400 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-400 hover:after:w-full after:transition-all">Services</a>
+                <a href="#gallery" class="hover:text-amber-400 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-400 hover:after:w-full after:transition-all">Gallery</a>
+                <a href="#clients" class="hover:text-amber-400 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-400 hover:after:w-full after:transition-all">Clients</a>
+                <a href="#contact" class="hover:text-amber-400 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-400 hover:after:w-full after:transition-all">Contact Us</a>
+            </nav>
+
+            <!-- Call to Action -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#contact" class="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-amber-600 text-obsidian-950 hover:from-amber-300 hover:to-amber-500 shadow-lg shadow-amber-500/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                    Plan Your Event
+                </a>
+            </div>
+
+            <!-- Mobile Drawer Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none" aria-label="Toggle navigation menu">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden bg-obsidian-900/95 backdrop-blur-2xl border-b border-obsidian-800 px-6 py-6 mt-4 transition-all">
+            <div class="flex flex-col gap-4 text-center">
+                <a href="#home" class="mobile-link text-base font-medium text-slate-200 hover:text-amber-400 py-2 border-b border-obsidian-800/50">Home</a>
+                <a href="#services" class="mobile-link text-base font-medium text-slate-200 hover:text-amber-400 py-2 border-b border-obsidian-800/50">Services</a>
+                <a href="#gallery" class="mobile-link text-base font-medium text-slate-200 hover:text-amber-400 py-2 border-b border-obsidian-800/50">Gallery</a>
+                <a href="#clients" class="mobile-link text-base font-medium text-slate-200 hover:text-amber-400 py-2 border-b border-obsidian-800/50">Clients</a>
+                <a href="#contact" class="mobile-link text-base font-medium text-slate-200 hover:text-amber-400 py-2 border-b border-obsidian-800/50">Contact Us</a>
+                <a href="#contact" class="mobile-link mt-4 w-full py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-400 text-obsidian-950 hover:bg-amber-300 text-center">
+                    Plan Your Event
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="home" class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <!-- Video Background Container -->
+        <div class="absolute inset-0 z-0">
+            <video id="hero-video-element" autoPlay loop muted playsInline class="w-full h-full object-cover scale-105 filter brightness-75">
+                <source id="hero-video-source" src="" type="video/mp4" />
+                Your browser does not support HTML5 video background.
+            </video>
+            <!-- Overlay Gradients -->
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/50 to-obsidian-950/40"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-obsidian-950/50 to-obsidian-950/90"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center mt-16">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-obsidian-900/70 backdrop-blur-md mb-6 animate-pulse">
+                <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+                <span class="text-[11px] uppercase tracking-widest text-amber-300 font-semibold">Premier Event Management & Luxury Decor</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6 font-serif leading-tight">
+                <span id="hero-site-name" class="block">Showkraft</span>
+                <span id="hero-site-tagline" class="block text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 font-sans text-2xl sm:text-4xl md:text-5xl font-light italic mt-2">
+                    "Where Dreams become Reality"
+                </span>
+            </h1>
+
+            <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 mb-10 leading-relaxed font-light">
+                We turn your vision into extraordinary realities. Bespoke decor, flawless coordination, and unforgettable experiences tailored for life's most precious occasions.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-obsidian-950 font-bold uppercase tracking-wider text-xs shadow-xl shadow-amber-500/20 hover:from-amber-300 hover:to-amber-500 transition-all transform hover:-translate-y-1">
+                    Explore Services
+                </a>
+                <a href="#gallery" class="w-full sm:w-auto px-8 py-4 rounded-full border border-slate-700 bg-obsidian-900/60 backdrop-blur-md text-white font-bold uppercase tracking-wider text-xs hover:bg-obsidian-800 hover:border-amber-400/50 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                    View Showcase
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <a href="#services" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-amber-400 transition-colors z-10">
+            <span class="text-[9px] uppercase tracking-widest font-semibold">Scroll Down</span>
+            <div class="w-5 h-9 rounded-full border-2 border-slate-600 flex items-start justify-center p-1">
+                <div class="w-1.5 h-2.5 rounded-full bg-amber-400 animate-bounce"></div>
+            </div>
+        </a>
+    </section>
+
+    <!-- ================= SERVICES SECTION ================= -->
+    <section id="services" class="py-24 bg-obsidian-950 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-amber-400 font-semibold tracking-widest text-xs uppercase mb-3">Our Expertise</h2>
+                <h3 class="text-3xl sm:text-5xl font-bold font-serif text-white mb-6">Masterpieces in Event Crafting</h3>
+                <div class="w-20 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                    Showkraft specializes in end-to-end event conceptualization, production, and execution. Whether it is an intimate gathering or a massive festival, we treat every event as a masterpiece.
+                </p>
+            </div>
+
+            <!-- Dynamic Services Cards Grid -->
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Rendered dynamically via JavaScript -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= GALLERY SECTION ================= -->
+    <section id="gallery" class="py-24 bg-obsidian-900/50 relative border-t border-b border-obsidian-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-amber-400 font-semibold tracking-widest text-xs uppercase mb-3">Portfolio</h2>
+                <h3 class="text-3xl sm:text-5xl font-bold font-serif text-white mb-6">Moments of Perfection</h3>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Browse through our recent productions, custom stage builds, and theme setups.
+                </p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div id="gallery-tabs" class="flex flex-wrap items-center justify-center gap-2 mb-12">
+                <!-- Rendered dynamically via JavaScript -->
+            </div>
+
+            <!-- Media Grid -->
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered dynamically via JavaScript -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= CLIENTS & TESTIMONIALS SECTION ================= -->
+    <section id="clients" class="py-24 bg-obsidian-950 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Client Logos Grid -->
+            <div class="mb-20 text-center">
+                <h2 class="text-amber-400 font-semibold tracking-widest text-xs uppercase mb-3">Trusted By Industry Leaders</h2>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto mb-10">We have partnered with top brands and private clients to deliver unparalleled experiences.</p>
+                
+                <div id="clients-grid" class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <!-- Rendered dynamically via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h3 class="text-3xl sm:text-4xl font-bold font-serif text-white mb-4">Client Feedback</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full"></div>
+            </div>
+
+            <div id="testimonials-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Rendered dynamically via JavaScript -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= CONTACT US SECTION ================= -->
+    <section id="contact" class="py-24 bg-obsidian-900/40 relative border-t border-obsidian-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Contact Details & Info -->
+                <div>
+                    <h2 class="text-amber-400 font-semibold tracking-widest text-xs uppercase mb-3">Get In Touch</h2>
+                    <h3 class="text-3xl sm:text-5xl font-bold font-serif text-white mb-6">Let's Create Magic Together</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                        Ready to plan your next corporate summit, royal wedding, or grand celebration? Contact our team today for a custom consultation.
+                    </p>
+
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-obsidian-900 border border-amber-500/30 text-amber-400 shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-white uppercase tracking-wider">Office Address</h5>
+                                <p id="contact-address" class="text-slate-400 text-sm mt-1"></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-obsidian-900 border border-amber-500/30 text-amber-400 shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-white uppercase tracking-wider">Phone & Inquiries</h5>
+                                <p id="contact-phone" class="text-slate-400 text-sm mt-1"></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-obsidian-900 border border-amber-500/30 text-amber-400 shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-white uppercase tracking-wider">Email Inquiry</h5>
+                                <p id="contact-email" class="text-slate-400 text-sm mt-1"></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-obsidian-900 border border-amber-500/30 text-amber-400 shrink-0">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-white uppercase tracking-wider">Business Hours</h5>
+                                <p id="contact-hours" class="text-slate-400 text-sm mt-1"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instant WhatsApp Link -->
+                    <a id="contact-whatsapp-btn" href="#" target="_blank" rel="noreferrer" class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-lg shadow-emerald-600/20">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        Instant WhatsApp Chat
+                    </a>
+                </div>
+
+                <!-- Interactive Booking Form -->
+                <div class="bg-obsidian-900 border border-obsidian-800 rounded-3xl p-8 relative">
+                    <h4 class="text-xl font-bold text-white mb-6">Request a Custom Proposal</h4>
+                    
+                    <form id="proposal-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Your Full Name</label>
+                            <input type="text" id="form-name" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-obsidian-800 text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 text-sm">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Email Address</label>
+                                <input type="email" id="form-email" required placeholder="john@example.com" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-obsidian-800 text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Phone Number</label>
+                                <input type="tel" id="form-phone" required placeholder="+1 (555) 000-0000" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-obsidian-800 text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Event Category</label>
+                                <select id="form-category" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-obsidian-800 text-white focus:outline-none focus:border-amber-400 text-sm">
+                                    <option value="Wedding Events">Wedding Events</option>
+                                    <option value="Corporate Events">Corporate Events</option>
+                                    <option value="Birthday Parties">Birthday Parties</option>
+                                    <option value="Theme Decors">Theme Decors</option>
+                                    <option value="Fest Organizers">Fest Organizers</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Tentative Date</label>
+                                <input type="date" id="form-date" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-obsidian-800 text-white focus:outline-none focus:border-amber-400 text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Event Requirements</label>
+                            <textarea id="form-message" rows="4" placeholder="Share estimated guest count, theme preferences, budget, or venue details..." class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-obsidian-800 text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 text-sm resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-600 text-obsidian-950 font-bold uppercase tracking-wider text-xs shadow-lg shadow-amber-500/20 hover:from-amber-300 hover:to-amber-500 transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            Submit Proposal Request
+                        </button>
+                    </form>
+
+                    <!-- Success State Notice -->
+                    <div id="form-success-message" class="hidden py-12 text-center flex flex-col items-center">
+                        <i data-lucide="check-circle-2" class="w-14 h-14 text-emerald-400 mb-4 animate-bounce"></i>
+                        <h5 class="text-xl font-bold text-white mb-2">Proposal Submitted!</h5>
+                        <p class="text-slate-400 text-sm max-w-sm">
+                            Thank you for reaching out to Showkraft. Our event specialist will review your details and contact you within 24 hours.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-obsidian-950 border-t border-obsidian-800/80 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-obsidian-800">
+                
+                <!-- Brand Col -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-amber-400 flex items-center justify-center text-obsidian-950 font-serif font-bold">S</div>
+                        <span class="text-xl font-bold tracking-wider text-white uppercase font-serif">
+                            Show<span class="text-amber-400">kraft</span>
+                        </span>
+                    </div>
+                    <p id="footer-tagline" class="text-slate-400 text-xs leading-relaxed mb-6 font-light"></p>
+                    <p class="text-slate-500 text-xs">
+                        Crafting royal weddings, luxury galas, and mega production fests worldwide.
+                    </p>
+                </div>
+
+                <!-- Quick Navigation Links -->
+                <div>
+                    <h5 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="#home" class="hover:text-amber-400 transition-colors">Home Page</a></li>
+                        <li><a href="#services" class="hover:text-amber-400 transition-colors">Core Services</a></li>
+                        <li><a href="#gallery" class="hover:text-amber-400 transition-colors">Media Gallery</a></li>
+                        <li><a href="#clients" class="hover:text-amber-400 transition-colors">Client Testimonials</a></li>
+                        <li><a href="#contact" class="hover:text-amber-400 transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services List -->
+                <div>
+                    <h5 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Event Categories</h5>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="#services" class="hover:text-amber-400 transition-colors">Wedding Events</a></li>
+                        <li><a href="#services" class="hover:text-amber-400 transition-colors">Corporate Events</a></li>
+                        <li><a href="#services" class="hover:text-amber-400 transition-colors">Birthday Parties</a></li>
+                        <li><a href="#services" class="hover:text-amber-400 transition-colors">Theme Decors</a></li>
+                        <li><a href="#services" class="hover:text-amber-400 transition-colors">Fest Organizers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Connect -->
+                <div>
+                    <h5 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Connect With Us</h5>
+                    <div class="flex items-center gap-3 mb-6">
+                        <a id="social-facebook" href="#" target="_blank" rel="noreferrer" aria-label="Facebook Page" class="p-3 rounded-full bg-obsidian-900 border border-obsidian-800 text-slate-300 hover:text-amber-400 hover:border-amber-400/50 transition-colors">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a id="social-instagram" href="#" target="_blank" rel="noreferrer" aria-label="Instagram Profile" class="p-3 rounded-full bg-obsidian-900 border border-obsidian-800 text-slate-300 hover:text-amber-400 hover:border-amber-400/50 transition-colors">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a id="social-whatsapp" href="#" target="_blank" rel="noreferrer" aria-label="WhatsApp Direct" class="p-3 rounded-full bg-obsidian-900 border border-obsidian-800 text-slate-300 hover:text-emerald-400 hover:border-emerald-400/50 transition-colors">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">
+                        Follow our social media channels for project reveals, behind-the-scenes, and design inspiration.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Copyright and HTTPS Status -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>© <span id="copyright-year"></span> Showkraft. All Rights Reserved.</p>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span>HTTPS Secured & Encrypted</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ================= MODAL: SERVICE DETAILS ================= -->
+    <div id="service-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-950/80 backdrop-blur-md">
+        <div class="bg-obsidian-900 border border-obsidian-800 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative">
+            <button id="close-service-modal" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-white bg-obsidian-950 rounded-full border border-obsidian-800">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="service-modal-body">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: MEDIA LIGHTBOX ================= -->
+    <div id="lightbox-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-950/95 backdrop-blur-lg">
+        <div class="relative max-w-4xl w-full bg-obsidian-900 border border-obsidian-800 rounded-2xl overflow-hidden">
+            <button id="close-lightbox-modal" class="absolute top-4 right-4 z-10 p-2 text-slate-400 hover:text-white bg-obsidian-950/80 rounded-full border border-obsidian-800">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="lightbox-modal-content">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT & EDITABLE CONFIGURATION ================= -->
+    <script>
+        // ==========================================
+        // EDITABLE WEBSITE DATA CONFIGURATION
+        // Easily edit text, videos, images, and contact info here
+        // ==========================================
+        const SITE_CONFIG = {
+            name: "Showkraft",
+            tagline: "Where Dreams become Reality",
+            heroVideoUrl: "https://assets.mixkit.co/videos/preview/mixkit-party-lights-and-confetti-falling-down-41544-large.mp4", 
+            heroFallbackImg: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=1920",
+            contactInfo: {
+                address: "Showkraft Tower, Suite 402, Luxury Boulevard, Suite City 10001",
+                phone: "+1 (800) 555-KRAFT / +1 (555) 019-2834",
+                email: "contact@showkraft.com",
+                whatsapp: "+15550192834",
+                workingHours: "Mon - Sat: 9:00 AM - 8:00 PM"
+            },
+            socials: {
+                facebook: "https://facebook.com",
+                instagram: "https://instagram.com",
+                whatsapp: "https://wa.me/15550192834"
+            }
+        };
+
+        const SERVICES = [
+            {
+                id: "weddings",
+                title: "Wedding Events",
+                icon: "heart",
+                shortDesc: "Bespoke weddings crafted with timeless elegance, royal mandap setups, and flawless execution.",
+                fullDesc: "From intimate beachfront vows to grand palace weddings, Showkraft handles everything including decor, gourmet catering, artist management, intelligent lighting, and guest hospitality.",
+                img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800",
+                features: ["Royal Entrance & Mandap Decor", "Celebrity Artist & Entertainment", "Luxury Hospitality & Logistics", "Custom Theme Styling"]
+            },
+            {
+                id: "corporate",
+                title: "Corporate Events",
+                icon: "briefcase",
+                shortDesc: "High-impact annual galas, product launches, award shows, and executive summits.",
+                fullDesc: "We bring professional excellence to your corporate brand. We manage staging, audio-visual tech, keynote setups, brand activations, and seamless guest experiences.",
+                img: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=800",
+                features: ["Product Launch Displays", "AV & Intelligent Stage Lighting", "Conference & Gala Management", "Brand Activation Lounges"]
+            },
+            {
+                id: "birthdays",
+                title: "Birthday Parties",
+                icon: "cake",
+                shortDesc: "Extravagant milestone celebrations and immersive themed birthday bashes.",
+                fullDesc: "Whether it is a sweet 16, a luxury 30th birthday, or a grand 50th golden jubilee, our creative team creates custom photo ops, catering, and live entertainment.",
+                img: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=800",
+                features: ["Custom Cake & Dessert Stations", "Interactive DJs & Performers", "Photobooths & Props", "Themed Floral & Lighting"]
+            },
+            {
+                id: "theme-decors",
+                title: "Theme Decors",
+                icon: "sparkles",
+                shortDesc: "Transforming venues into magical dreamscapes with custom lighting and structural design.",
+                fullDesc: "Our in-house design studio creates custom 3D themes ranging from Bohemian Romance, Vintage Hollywood, Cyberpunk Luxury to Traditional Heritage setups.",
+                img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80&w=800",
+                features: ["3D Environment Prototyping", "Bespoke Floral Installations", "Architectural Ambient Lighting", "Custom Furniture Sourcing"]
+            },
+            {
+                id: "fest-organizers",
+                title: "Fest Organizers",
+                icon: "music",
+                shortDesc: "Large-scale music festivals, cultural carnivals, college fests, and public exhibitions.",
+                fullDesc: "Executing massive crowd events requires precision logistics. Showkraft delivers stage mechanics, security protocol, sound reinforcement, vendor management, and crowd control.",
+                img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800",
+                features: ["Massive Stage & Sound Rigging", "Crowd Management Protocols", "Multi-Artist Lineup Scheduling", "Ticketing & VIP Lounge Setup"]
+            }
+        ];
+
+        const GALLERY_ITEMS = [
+            {
+                id: 1,
+                title: "Royal Palace Wedding",
+                category: "weddings",
+                type: "image",
+                src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000",
+                description: "Grand courtyard wedding setup with custom floral chandeliers."
+            },
+            {
+                id: 2,
+                title: "Tech Summit Gala",
+                category: "corporate",
+                type: "image",
+                src: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1000",
+                description: "Futuristic stage design with laser mapping and LED video walls."
+            },
+            {
+                id: 3,
+                title: "Neon Dreams 30th Birthday",
+                category: "birthdays",
+                type: "image",
+                src: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=1000",
+                description: "High-energy glow party featuring custom neon sculpture installation."
+            },
+            {
+                id: 4,
+                title: "Vintage Botanical Elegance",
+                category: "theme-decors",
+                type: "image",
+                src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=1000",
+                description: "Intimate garden dinner setup with suspended fairy lights."
+            },
+            {
+                id: 5,
+                title: "Summer Beat Music Fest",
+                category: "fest-organizers",
+                type: "video",
+                src: "https://assets.mixkit.co/videos/preview/mixkit-crowd-at-a-concert-4096-large.mp4",
+                poster: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1000",
+                description: "50,000+ attendee outdoor music festival featuring top international artists."
+            },
+            {
+                id: 6,
+                title: "Luxury Beachfront Nuptials",
+                category: "weddings",
+                type: "image",
+                src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=1000",
+                description: "Sunset ceremony setup with panoramic ocean views and organic floral arches."
+            }
+        ];
+
+        const CLIENTS = [
+            { name: "Vanguard Global", logo: "VANGUARD", role: "Corporate Annual Meet" },
+            { name: "Aura Luxury Hotel", logo: "AURA LUXE", role: "Grand Opening Gala" },
+            { name: "Nexus Tech Ventures", logo: "NEXUS", role: "Product Launch Event" },
+            { name: "Crown Jewels Co.", logo: "CROWN & CO", role: "Exhibition Decor" },
+            { name: "Veritas Media", logo: "VERITAS", role: "Award Night Production" }
+        ];
+
+        const TESTIMONIALS = [
+            {
+                id: 1,
+                client: "Eleanor & Marcus Vance",
+                event: "Destination Wedding",
+                text: "Showkraft truly lived up to their tagline! They transformed our wedding into a literal fairytale. From the mandap decor to guest hospitality, everything was executed effortlessly.",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"
+            },
+            {
+                id: 2,
+                client: "David Sterling",
+                event: "VP, Sterling Enterprises",
+                text: "The stage design and technology management for our annual corporate summit exceeded all expectations. Flawless audio-visuals and prompt coordination throughout.",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
+            },
+            {
+                id: 3,
+                client: "Sophia Reynolds",
+                event: "40th Birthday Gala",
+                text: "The theme decor was unlike anything my guests had ever seen. The attention to detail in lighting and floral installations made it the event of the year!",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200"
+            }
+        ];
+
+        // ==========================================
+        // APPLICATION LOGIC
+        // ==========================================
+        let activeGalleryFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSiteConfig();
+            renderServices();
+            renderGalleryTabs();
+            renderGalleryGrid();
+            renderClients();
+            renderTestimonials();
+            setupEventListeners();
+            lucide.createIcons();
+        });
+
+        // Populate basic config details into DOM
+        function initializeSiteConfig() {
+            document.getElementById('hero-site-name').innerText = SITE_CONFIG.name;
+            document.getElementById('hero-site-tagline').innerText = `"${SITE_CONFIG.tagline}"`;
+            document.getElementById('footer-tagline').innerText = `"${SITE_CONFIG.tagline}"`;
+            document.getElementById('copyright-year').innerText = new Date().getFullYear();
+
+            // Set Video Source
+            const videoElem = document.getElementById('hero-video-element');
+            const videoSource = document.getElementById('hero-video-source');
+            videoElem.poster = SITE_CONFIG.heroFallbackImg;
+            videoSource.src = SITE_CONFIG.heroVideoUrl;
+            videoElem.load();
+
+            // Contact Info
+            document.getElementById('contact-address').innerText = SITE_CONFIG.contactInfo.address;
+            document.getElementById('contact-phone').innerText = SITE_CONFIG.contactInfo.phone;
+            document.getElementById('contact-email').innerText = SITE_CONFIG.contactInfo.email;
+            document.getElementById('contact-hours').innerText = SITE_CONFIG.contactInfo.workingHours;
+            document.getElementById('contact-whatsapp-btn').href = SITE_CONFIG.socials.whatsapp;
+
+            // Socials
+            document.getElementById('social-facebook').href = SITE_CONFIG.socials.facebook;
+            document.getElementById('social-instagram').href = SITE_CONFIG.socials.instagram;
+            document.getElementById('social-whatsapp').href = SITE_CONFIG.socials.whatsapp;
+        }
+
+        // Render Services
+        function renderServices() {
+            const container = document.getElementById('services-grid');
+            container.innerHTML = SERVICES.map((service, index) => `
+                <div class="group rounded-2xl bg-obsidian-900/80 border border-obsidian-800 hover:border-amber-500/40 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${service.img}" alt="${service.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-obsidian-900/30 to-transparent"></div>
+                        <div class="absolute top-4 right-4 p-3 rounded-xl bg-obsidian-950/80 backdrop-blur-md border border-amber-500/30 text-amber-400">
+                            <i data-lucide="${service.icon}" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">${service.title}</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">${service.shortDesc}</p>
+                        </div>
+                        <button onclick="openServiceModal('${service.id}')" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400 hover:text-amber-300 mt-auto group/btn">
+                            Read Details <i data-lucide="chevron-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Gallery Filter Tabs
+        function renderGalleryTabs() {
+            const tabs = [
+                { id: 'all', label: 'All Projects' },
+                { id: 'weddings', label: 'Weddings' },
+                { id: 'corporate', label: 'Corporate' },
+                { id: 'birthdays', label: 'Birthdays' },
+                { id: 'theme-decors', label: 'Theme Decors' },
+                { id: 'fest-organizers', label: 'Fests' }
+            ];
+            const container = document.getElementById('gallery-tabs');
+            container.innerHTML = tabs.map(tab => `
+                <button onclick="filterGallery('${tab.id}')" class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${activeGalleryFilter === tab.id ? 'bg-amber-400 text-obsidian-950 shadow-md shadow-amber-500/20' : 'bg-obsidian-800 text-slate-300 hover:bg-obsidian-700 hover:text-white'}">
+                    ${tab.label}
+                </button>
+            `).join('');
+        }
+
+        // Filter & Render Gallery Items
+        function filterGallery(category) {
+            activeGalleryFilter = category;
+            renderGalleryTabs();
+            renderGalleryGrid();
+            lucide.createIcons();
+        }
+
+        function renderGalleryGrid() {
+            const container = document.getElementById('gallery-grid');
+            const items = activeGalleryFilter === 'all' 
+                ? GALLERY_ITEMS 
+                : GALLERY_ITEMS.filter(i => i.category === activeGalleryFilter);
+
+            container.innerHTML = items.map(item => `
+                <div onclick="openLightbox(${item.id})" class="group relative rounded-xl overflow-hidden bg-obsidian-950 cursor-pointer h-72 border border-obsidian-800 hover:border-amber-500/50 transition-all duration-300">
+                    <img src="${item.type === 'video' ? item.poster : item.src}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    
+                    ${item.type === 'video' ? `
+                        <div class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-500/90 text-obsidian-950 flex items-center justify-center shadow-lg">
+                            <i data-lucide="play" class="w-4 h-4 fill-obsidian-950 ml-0.5"></i>
+                        </div>
+                    ` : ''}
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+                        <span class="text-[10px] uppercase font-bold text-amber-400 tracking-wider mb-1">${item.category.replace('-', ' ')}</span>
+                        <h4 class="text-lg font-bold text-white mb-1">${item.title}</h4>
+                        <p class="text-xs text-slate-300 line-clamp-2 font-light">${item.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Client Logos Grid
+        function renderClients() {
+            const container = document.getElementById('clients-grid');
+            container.innerHTML = CLIENTS.map(c => `
+                <div class="p-6 rounded-xl bg-obsidian-900/40 border border-obsidian-800/80 flex flex-col items-center justify-center hover:border-amber-500/30 transition-colors">
+                    <span class="text-base font-serif font-black tracking-widest text-slate-300 uppercase">${c.logo}</span>
+                    <span class="text-[9px] text-slate-500 mt-1 uppercase tracking-wider">${c.role}</span>
+                </div>
+            `).join('');
+        }
+
+        // Render Testimonials Grid
+        function renderTestimonials() {
+            const container = document.getElementById('testimonials-grid');
+            container.innerHTML = TESTIMONIALS.map(t => `
+                <div class="p-8 rounded-2xl bg-obsidian-900/60 border border-obsidian-800 flex flex-col justify-between relative">
+                    <div>
+                        <div class="flex items-center gap-1 text-amber-400 mb-4">
+                            ${Array(t.rating).fill('<i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>').join('')}
+                        </div>
+                        <p class="text-slate-300 text-sm italic leading-relaxed mb-6">"${t.text}"</p>
+                    </div>
+                    <div class="flex items-center gap-4 border-t border-obsidian-800/80 pt-4">
+                        <img src="${t.avatar}" alt="${t.client}" class="w-12 h-12 rounded-full object-cover border border-amber-500/30" />
+                        <div>
+                            <h5 class="text-sm font-bold text-white">${t.client}</h5>
+                            <p class="text-xs text-amber-400/80">${t.event}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Service Modal Handlers
+        function openServiceModal(id) {
+            const service = SERVICES.find(s => s.id === id);
+            if (!service) return;
+
+            const modalBody = document.getElementById('service-modal-body');
+            modalBody.innerHTML = `
+                <div class="relative h-56 rounded-2xl overflow-hidden mb-6">
+                    <img src="${service.img}" alt="${service.title}" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
+                </div>
+                <h3 class="text-2xl font-bold font-serif text-white mb-3">${service.title}</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">${service.fullDesc}</p>
+
+                <h4 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Key Highlights & Inclusions</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                    ${service.features.map(f => `
+                        <div class="flex items-center gap-2 text-xs text-slate-200">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+                            <span>${f}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <a href="#contact" onclick="closeServiceModal()" class="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-obsidian-950 font-bold uppercase text-xs tracking-wider flex items-center justify-center gap-2">
+                    Inquire For ${service.title}
+                </a>
+            `;
+            document.getElementById('service-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeServiceModal() {
+            document.getElementById('service-modal').classList.add('hidden');
+        }
+
+        // Lightbox Modal Handlers
+        function openLightbox(id) {
+            const item = GALLERY_ITEMS.find(g => g.id === id);
+            if (!item) return;
+
+            const content = document.getElementById('lightbox-modal-content');
+            content.innerHTML = `
+                <div class="bg-black flex items-center justify-center max-h-[70vh]">
+                    ${item.type === 'video' ? `
+                        <video controls autoPlay class="max-h-[70vh] w-full">
+                            <source src="${item.src}" type="video/mp4" />
+                        </video>
+                    ` : `
+                        <img src="${item.src}" alt="${item.title}" class="max-h-[70vh] w-auto object-contain" />
+                    `}
+                </div>
+                <div class="p-6 bg-obsidian-900">
+                    <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${item.category}</span>
+                    <h4 class="text-xl font-bold text-white mt-1 mb-2">${item.title}</h4>
+                    <p class="text-slate-400 text-sm font-light">${item.description}</p>
+                </div>
+            `;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightboxModal() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // Event Listeners for Navbar, Modals & Forms
+        function setupEventListeners() {
+            // Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+
+            // Sticky Header Scroll Effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-obsidian-950/95', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'py-4', 'shadow-xl');
+                    navbar.classList.remove('py-6', 'bg-gradient-to-b');
+                } else {
+                    navbar.classList.remove('bg-obsidian-950/95', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'py-4', 'shadow-xl');
+                    navbar.classList.add('py-6', 'bg-gradient-to-b');
+                }
+            });
+
+            // Modal Close Buttons
+            document.getElementById('close-service-modal').addEventListener('click', closeServiceModal);
+            document.getElementById('close-lightbox-modal').addEventListener('click', closeLightboxModal);
+
+            // Close modal on click outside box
+            document.getElementById('service-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'service-modal') closeServiceModal();
+            });
+            document.getElementById('lightbox-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'lightbox-modal') closeLightboxModal();
+            });
+
+            // Contact Form Submit Handler
+            const form = document.getElementById('proposal-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                form.classList.add('hidden');
+                document.getElementById('form-success-message').classList.remove('hidden');
+                setTimeout(() => {
+                    form.reset();
+                    form.classList.remove('hidden');
+                    document.getElementById('form-success-message').classList.add('hidden');
+                }, 5000);
+            });
+        }
+    </script>
+</body>
+</html>
